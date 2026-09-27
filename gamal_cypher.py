@@ -1,5 +1,6 @@
 import numpy as np
 from math_core import fast_pow
+from crypto_utils import generate_prime
 
 
 def find_divisors(N):
@@ -41,7 +42,7 @@ def find_primitive_root(p):
         if is_primitive:
             return g
 
-    return None
+    return 0
 
 
 def generate_gamel_keys(p):
@@ -53,7 +54,21 @@ def generate_gamel_keys(p):
     return g, c_B, d_B
 
 
-def gamal_encrypt_file(input_path, output_path, p, g, d_B):
+def gamal_encrypt_file(input_path, output_path, mode="random"):
+    if mode == "manual":
+        p = int(input("p: "))
+        g = int(input(f"g (от 2 до {p-1}): "))
+        c_B = int(input(f"(от 2 до {p-2}): "))
+
+        d_B = fast_pow(g, c_B, p)[0]
+    else:
+        p = generate_prime(low=300, high=10000)
+
+        g = find_primitive_root(p)
+
+        c_B = int(np.random.randint(2, p - 2))
+        d_B = fast_pow(g, c_B, p)[0]
+
     with open(input_path, "rb") as inf, open(output_path, "wb") as outf:
         while True:
             byte = inf.read(1)
@@ -62,7 +77,7 @@ def gamal_encrypt_file(input_path, output_path, p, g, d_B):
                 break
 
             m = byte[0]
-            k = np.random.randint(1, p - 2, dtype="int32")  # сессионный ключ
+            k = int(np.random.randint(1, p - 2, dtype="int32"))  # сессионный ключ
             r = fast_pow(g, k, p)[0]  # первая часть шифртекста
 
             mask = fast_pow(d_B, k, p)[0]
@@ -73,6 +88,8 @@ def gamal_encrypt_file(input_path, output_path, p, g, d_B):
 
             outf.write(r_bytes)
             outf.write(e_bytes)
+
+    return p, g, c_B, d_B
 
 
 def gamal_decrypt_file(input_path, output_path, p, c_B):

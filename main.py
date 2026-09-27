@@ -45,11 +45,7 @@ import crypto_utils
 
 ## Лаба 5
 
-p = crypto_utils.generate_prime(low=300, high=10000)
-
-g, c_B, d_B = gamal_cypher.generate_gamel_keys(p)
-
-gamal_cypher.gamal_encrypt_file("files/kitty.png", "files/encr_kitty.png", p, g, d_B)
+p, g, c_B, d_B = gamal_cypher.gamal_encrypt_file("files/kitty.png", "files/encr_kitty.png", mode="random")
 gamal_cypher.gamal_decrypt_file(
     "files/encr_kitty.png", "files/restored_kitty.png", p, c_B
 )

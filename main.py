@@ -1,6 +1,7 @@
 import math_core
 import algorithms
 import shamir_cypher
+import gamal_cypher
 import crypto_utils
 
 ## Лаба 1
@@ -28,16 +29,27 @@ import crypto_utils
 
 ## Лаба 4
 
-p = crypto_utils.generate_prime(low=300, high=10000)
+# p = crypto_utils.generate_prime(low=300, high=10000)
 
-Ca, Da = shamir_cypher.generate_shamir_keys(p)
-Cb, Db = shamir_cypher.generate_shamir_keys(p)
+# Ca, Da = shamir_cypher.generate_shamir_keys(p)
+# Cb, Db = shamir_cypher.generate_shamir_keys(p)
 
 # shamir_cypher.shamir_encrypt_file("files/text.txt", "files/encr_text.txt", Ca, Cb, p)
 # shamir_cypher.shamir_decrypt_file("files/encr_text.txt", "files/restored_text.txt", Da, Db, p)
 
-shamir_cypher.shamir_encrypt_file("files/kitty.png", "files/encr_kitty.png", Ca, Cb, p)
-shamir_cypher.shamir_decrypt_file("files/encr_kitty.png", "files/restored_kitty.png", Da, Db, p)
+# shamir_cypher.shamir_encrypt_file("files/kitty.png", "files/encr_kitty.png", Ca, Cb, p)
+# shamir_cypher.shamir_decrypt_file("files/encr_kitty.png", "files/restored_kitty.png", Da, Db, p)
 
 
-print(f"Ключи 1: C={Ca}, D={Da}. Ключи 2: C={Cb}, D={Db}")
+# print(f"Ключи 1: C={Ca}, D={Da}. Ключи 2: C={Cb}, D={Db}")
+
+## Лаба 5
+
+p = crypto_utils.generate_prime(low=300, high=10000)
+
+g, c_B, d_B = gamal_cypher.generate_gamel_keys(p)
+
+gamal_cypher.gamal_encrypt_file("files/kitty.png", "files/encr_kitty.png", p, g, d_B)
+gamal_cypher.gamal_decrypt_file(
+    "files/encr_kitty.png", "files/restored_kitty.png", p, c_B
+)

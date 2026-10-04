@@ -3,6 +3,7 @@ import algorithms
 import shamir_cypher
 import gamal_cypher
 import crypto_utils
+import rsa_cypher
 
 ## Лаба 1
 # res, a, x, p = math_core.fast_pow(mode="random")
@@ -45,7 +46,14 @@ import crypto_utils
 
 ## Лаба 5
 
-p, g, c_B, d_B = gamal_cypher.gamal_encrypt_file("files/kitty.png", "files/encr_kitty.png", mode="random")
-gamal_cypher.gamal_decrypt_file(
-    "files/encr_kitty.png", "files/restored_kitty.png", p, c_B
-)
+# p, g, c_B, d_B = gamal_cypher.gamal_encrypt_file("files/kitty.png", "files/encr_kitty.png", mode="random")
+# gamal_cypher.gamal_decrypt_file(
+#     "files/encr_kitty.png", "files/restored_kitty.png", p, c_B
+# )
+
+## Лаба 6
+
+p, q, N, d, c = rsa_cypher.generate_rsa_keys(mode="random")
+
+rsa_cypher.rsa_encrypt_file("files/kitty.png", "files/encr_kitty.png", d, N)
+rsa_cypher.rsa_decrypt_file("files/encr_kitty.png", "files/restored_kitty.png", c, N)

@@ -4,6 +4,7 @@ import shamir_cypher
 import gamal_cypher
 import crypto_utils
 import rsa_cypher
+import vernam_cypher
 
 ## Лаба 1
 # res, a, x, p = math_core.fast_pow(mode="random")
@@ -53,7 +54,16 @@ import rsa_cypher
 
 ## Лаба 6
 
-p, q, N, d, c = rsa_cypher.generate_rsa_keys(mode="random")
+# p, q, N, d, c = rsa_cypher.generate_rsa_keys(mode="random")
 
-rsa_cypher.rsa_encrypt_file("files/kitty.png", "files/encr_kitty.png", d, N)
-rsa_cypher.rsa_decrypt_file("files/encr_kitty.png", "files/restored_kitty.png", c, N)
+# rsa_cypher.rsa_encrypt_file("files/kitty.png", "files/encr_kitty.png", d, N)
+# rsa_cypher.rsa_decrypt_file("files/encr_kitty.png", "files/restored_kitty.png", c, N)
+
+## Лаба 7
+
+key = vernam_cypher.vernam_encrypt_file(
+    "files/kitty.png", "files/encr_kitty.png", mode="dh"
+)
+vernam_cypher.vernam_decrypt_file(
+    "files/encr_kitty.png", "files/restored_kitty.png", key
+)

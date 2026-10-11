@@ -53,8 +53,6 @@ def diffie_hellman(p=10, g=5, Xa=0, Xb=0, mode="manual"):
         Xa = int(np.random.randint(2, p))
         Xb = int(np.random.randint(2, p))
 
-        print(f"Сгенерировано: p={p}, g={g}, Xa={Xa}, Xb={Xb}")
-
     Ya = fast_pow(g, Xa, p)[0]
     Yb = fast_pow(g, Xb, p)[0]
 
